@@ -1,0 +1,708 @@
+{
+  "factors": {
+    "raw-material": 0.12,
+    "farm-fuel": 2.68,
+    "farm-fertilizer": 1.75,
+    "supplier-certification": 15,
+    "road-intermediate": 0.1,
+    "air-intermediate": 0.75,
+    "sea-intermediate": 0.02,
+    "drying-process": 0.43,
+    "cold-storage": 0.43,
+    "sample-shipping": 0.28,
+    "lab-analysis": 8,
+    "road-business-trip": 0.19,
+    "air-business-trip": 0.16,
+    "sea-business-trip": 0.11,
+    "accommodation": 14,
+    "natural-gas": 1.9,
+    "electricity": 0.43,
+    "chemical-emissions": 2.2,
+    "diesel-forklift": 2.6,
+    "electric-forklift": 0.43,
+    "service-vehicles": 0.21,
+    "organic-waste": 0.45,
+    "cafeteria": 1.25,
+    "cardboard": 0.95,
+    "visitor-emissions": 2.8,
+    "truck-shipment": 0.1,
+    "sea-export": 0.02,
+    "air-export": 0.75,
+    "warehouse-transfer": 0.09,
+    "distributor-vehicles": 0.21,
+    "outsourced-logistics": 19,
+    "storage-energy": 0.43,
+    "returns": 0.35,
+    "waste-burning": 2.9
+  },
+  "records": [
+    {
+      "id": "07f77899-c8d4-4d31-944a-f3d20828a0d8",
+      "createdAt": "2026-04-24T07:14:29.323Z",
+      "companyName": "Velit Aş",
+      "periodType": "monthly",
+      "year": 2026,
+      "month": 4,
+      "grandTotal": 12067.939999999999,
+      "groupTotals": [
+        {
+          "groupId": "supplier-to-factory",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "total": 3919.75
+        },
+        {
+          "groupId": "factory-inside",
+          "groupTitle": "Fabrika Ici",
+          "total": 3404.64
+        },
+        {
+          "groupId": "factory-to-customer",
+          "groupTitle": "Fabrikadan Musteriye",
+          "total": 4743.55
+        }
+      ],
+      "stepDetails": [
+        {
+          "stepId": "raw-material",
+          "stepLabel": "Hammadde Tasimasi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.12,
+          "emission": 14.76
+        },
+        {
+          "stepId": "farm-fuel",
+          "stepLabel": "Tedarikcinin Tarim Faaliyetleri (Yakit)",
+          "unit": "litre",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 2.68,
+          "emission": 329.64000000000004
+        },
+        {
+          "stepId": "farm-fertilizer",
+          "stepLabel": "Tedarikcinin Tarim Faaliyetleri (Gubre)",
+          "unit": "kg",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 13,
+          "factor": 1.75,
+          "emission": 22.75
+        },
+        {
+          "stepId": "supplier-certification",
+          "stepLabel": "Tedarikci Sertifikasyon Sureci",
+          "unit": "adet",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 15,
+          "emission": 1845
+        },
+        {
+          "stepId": "road-intermediate",
+          "stepLabel": "Karayoluyla Ara Tedarikci Transferi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 133,
+          "factor": 0.1,
+          "emission": 13.3
+        },
+        {
+          "stepId": "air-intermediate",
+          "stepLabel": "Havayoluyla Ara Tedarikci Transferi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.75,
+          "emission": 92.25
+        },
+        {
+          "stepId": "sea-intermediate",
+          "stepLabel": "Denizyoluyla Ara Tedarikci Transferi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.02,
+          "emission": 2.46
+        },
+        {
+          "stepId": "drying-process",
+          "stepLabel": "Kurutma Sureci",
+          "unit": "kWh",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 1222,
+          "factor": 0.43,
+          "emission": 525.46
+        },
+        {
+          "stepId": "cold-storage",
+          "stepLabel": "Soguk Hava Deposu Kullanimi",
+          "unit": "kWh",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "sample-shipping",
+          "stepLabel": "Numune Tasima",
+          "unit": "kg-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 133,
+          "factor": 0.28,
+          "emission": 37.24
+        },
+        {
+          "stepId": "lab-analysis",
+          "stepLabel": "Laboratuvar Analizi",
+          "unit": "adet",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 8,
+          "emission": 984
+        },
+        {
+          "stepId": "road-business-trip",
+          "stepLabel": "Karayoluyla Is Gezisi",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.19,
+          "emission": 23.37
+        },
+        {
+          "stepId": "air-business-trip",
+          "stepLabel": "Havayoluyla Is Gezisi",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.16,
+          "emission": 19.68
+        },
+        {
+          "stepId": "sea-business-trip",
+          "stepLabel": "Denizyoluyla Is Gezisi",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.11,
+          "emission": 13.53
+        },
+        {
+          "stepId": "accommodation",
+          "stepLabel": "Konaklama",
+          "unit": "gece",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 14,
+          "emission": 1722
+        },
+        {
+          "stepId": "natural-gas",
+          "stepLabel": "Dogalgaz Tuketimi",
+          "unit": "Sm3",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 1.9,
+          "emission": 233.7
+        },
+        {
+          "stepId": "electricity",
+          "stepLabel": "Elektrik Tuketimi",
+          "unit": "kWh",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "chemical-emissions",
+          "stepLabel": "Kimyasal Emisyonlar",
+          "unit": "kg",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 2.2,
+          "emission": 270.6
+        },
+        {
+          "stepId": "diesel-forklift",
+          "stepLabel": "Dizel/Benzin Forklift",
+          "unit": "litre",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 2.6,
+          "emission": 319.8
+        },
+        {
+          "stepId": "electric-forklift",
+          "stepLabel": "Elektrikli Forklift",
+          "unit": "kWh",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "service-vehicles",
+          "stepLabel": "Tasima Servis Araclari",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.21,
+          "emission": 25.83
+        },
+        {
+          "stepId": "organic-waste",
+          "stepLabel": "Organik Atiklar",
+          "unit": "kg",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.45,
+          "emission": 55.35
+        },
+        {
+          "stepId": "cafeteria",
+          "stepLabel": "Kantin Yemekhanesi Emisyonlari",
+          "unit": "ogun",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 1.25,
+          "emission": 153.75
+        },
+        {
+          "stepId": "cardboard",
+          "stepLabel": "Karton Ambalaj",
+          "unit": "kg",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.95,
+          "emission": 116.85
+        },
+        {
+          "stepId": "visitor-emissions",
+          "stepLabel": "Gelen Misafirlerden Kaynakli Emisyonlar",
+          "unit": "kisi",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 2.8,
+          "emission": 344.4
+        },
+        {
+          "stepId": "truck-shipment",
+          "stepLabel": "Urun Sevkiyat Kamyonlari",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 1123,
+          "factor": 0.1,
+          "emission": 112.30000000000001
+        },
+        {
+          "stepId": "sea-export",
+          "stepLabel": "Denizyolu Ihracat Tasimaciligi",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.02,
+          "emission": 2.46
+        },
+        {
+          "stepId": "air-export",
+          "stepLabel": "Havayolu Ihracat Tasimaciligi",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.75,
+          "emission": 92.25
+        },
+        {
+          "stepId": "warehouse-transfer",
+          "stepLabel": "Ara Depolar Arasi Transfer",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.09,
+          "emission": 11.07
+        },
+        {
+          "stepId": "distributor-vehicles",
+          "stepLabel": "Distributor Araclari",
+          "unit": "km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.21,
+          "emission": 25.83
+        },
+        {
+          "stepId": "outsourced-logistics",
+          "stepLabel": "Taseron Lojistik Firmalari",
+          "unit": "sevkiyat",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 213,
+          "factor": 19,
+          "emission": 4047
+        },
+        {
+          "stepId": "storage-energy",
+          "stepLabel": "Urunun Depolarda Tutuldugu Sure Boyunca Enerji Kullanimi",
+          "unit": "kWh",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "returns",
+          "stepLabel": "Bozulmus veya Hatali Urunlerin Geri Donusu",
+          "unit": "kg",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.35,
+          "emission": 43.05
+        },
+        {
+          "stepId": "waste-burning",
+          "stepLabel": "Tasimadan Kaynakli Atiklarin Yakilmasi",
+          "unit": "kg",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 2.9,
+          "emission": 356.7
+        }
+      ]
+    },
+    {
+      "id": "1009e2f2-b3d1-4549-b049-2150a3d0c4a8",
+      "createdAt": "2026-04-24T07:58:37.673Z",
+      "companyName": "Nazlı AŞ",
+      "periodType": "monthly",
+      "year": 2026,
+      "month": 1,
+      "grandTotal": 15652.920000000002,
+      "groupTotals": [
+        {
+          "groupId": "supplier-to-factory",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "total": 5574.88
+        },
+        {
+          "groupId": "factory-inside",
+          "groupTitle": "Fabrika Ici",
+          "total": 3404.64
+        },
+        {
+          "groupId": "factory-to-customer",
+          "groupTitle": "Fabrikadan Musteriye",
+          "total": 6673.400000000001
+        }
+      ],
+      "stepDetails": [
+        {
+          "stepId": "raw-material",
+          "stepLabel": "Hammadde Tasimasi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.12,
+          "emission": 14.76
+        },
+        {
+          "stepId": "farm-fuel",
+          "stepLabel": "Tedarikcinin Tarim Faaliyetleri (Yakit)",
+          "unit": "litre",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 2.68,
+          "emission": 329.64000000000004
+        },
+        {
+          "stepId": "farm-fertilizer",
+          "stepLabel": "Tedarikcinin Tarim Faaliyetleri (Gubre)",
+          "unit": "kg",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 1231,
+          "factor": 1.75,
+          "emission": 2154.25
+        },
+        {
+          "stepId": "supplier-certification",
+          "stepLabel": "Tedarikci Sertifikasyon Sureci",
+          "unit": "adet",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 15,
+          "emission": 1845
+        },
+        {
+          "stepId": "road-intermediate",
+          "stepLabel": "Karayoluyla Ara Tedarikci Transferi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.1,
+          "emission": 12.3
+        },
+        {
+          "stepId": "air-intermediate",
+          "stepLabel": "Havayoluyla Ara Tedarikci Transferi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.75,
+          "emission": 92.25
+        },
+        {
+          "stepId": "sea-intermediate",
+          "stepLabel": "Denizyoluyla Ara Tedarikci Transferi",
+          "unit": "ton-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.02,
+          "emission": 2.46
+        },
+        {
+          "stepId": "drying-process",
+          "stepLabel": "Kurutma Sureci",
+          "unit": "kWh",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "cold-storage",
+          "stepLabel": "Soguk Hava Deposu Kullanimi",
+          "unit": "kWh",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "sample-shipping",
+          "stepLabel": "Numune Tasima",
+          "unit": "kg-km",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 0.28,
+          "emission": 34.440000000000005
+        },
+        {
+          "stepId": "lab-analysis",
+          "stepLabel": "Laboratuvar Analizi",
+          "unit": "adet",
+          "groupTitle": "Tedarikciden Fabrikaya",
+          "value": 123,
+          "factor": 8,
+          "emission": 984
+        },
+        {
+          "stepId": "road-business-trip",
+          "stepLabel": "Karayoluyla Is Gezisi",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.19,
+          "emission": 23.37
+        },
+        {
+          "stepId": "air-business-trip",
+          "stepLabel": "Havayoluyla Is Gezisi",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.16,
+          "emission": 19.68
+        },
+        {
+          "stepId": "sea-business-trip",
+          "stepLabel": "Denizyoluyla Is Gezisi",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.11,
+          "emission": 13.53
+        },
+        {
+          "stepId": "accommodation",
+          "stepLabel": "Konaklama",
+          "unit": "gece",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 14,
+          "emission": 1722
+        },
+        {
+          "stepId": "natural-gas",
+          "stepLabel": "Dogalgaz Tuketimi",
+          "unit": "Sm3",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 1.9,
+          "emission": 233.7
+        },
+        {
+          "stepId": "electricity",
+          "stepLabel": "Elektrik Tuketimi",
+          "unit": "kWh",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "chemical-emissions",
+          "stepLabel": "Kimyasal Emisyonlar",
+          "unit": "kg",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 2.2,
+          "emission": 270.6
+        },
+        {
+          "stepId": "diesel-forklift",
+          "stepLabel": "Dizel/Benzin Forklift",
+          "unit": "litre",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 2.6,
+          "emission": 319.8
+        },
+        {
+          "stepId": "electric-forklift",
+          "stepLabel": "Elektrikli Forklift",
+          "unit": "kWh",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.43,
+          "emission": 52.89
+        },
+        {
+          "stepId": "service-vehicles",
+          "stepLabel": "Tasima Servis Araclari",
+          "unit": "km",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.21,
+          "emission": 25.83
+        },
+        {
+          "stepId": "organic-waste",
+          "stepLabel": "Organik Atiklar",
+          "unit": "kg",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.45,
+          "emission": 55.35
+        },
+        {
+          "stepId": "cafeteria",
+          "stepLabel": "Kantin Yemekhanesi Emisyonlari",
+          "unit": "ogun",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 1.25,
+          "emission": 153.75
+        },
+        {
+          "stepId": "cardboard",
+          "stepLabel": "Karton Ambalaj",
+          "unit": "kg",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 0.95,
+          "emission": 116.85
+        },
+        {
+          "stepId": "visitor-emissions",
+          "stepLabel": "Gelen Misafirlerden Kaynakli Emisyonlar",
+          "unit": "kisi",
+          "groupTitle": "Fabrika Ici",
+          "value": 123,
+          "factor": 2.8,
+          "emission": 344.4
+        },
+        {
+          "stepId": "truck-shipment",
+          "stepLabel": "Urun Sevkiyat Kamyonlari",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.1,
+          "emission": 12.3
+        },
+        {
+          "stepId": "sea-export",
+          "stepLabel": "Denizyolu Ihracat Tasimaciligi",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 322,
+          "factor": 0.02,
+          "emission": 6.44
+        },
+        {
+          "stepId": "air-export",
+          "stepLabel": "Havayolu Ihracat Tasimaciligi",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 1312,
+          "factor": 0.75,
+          "emission": 984
+        },
+        {
+          "stepId": "warehouse-transfer",
+          "stepLabel": "Ara Depolar Arasi Transfer",
+          "unit": "ton-km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 424,
+          "factor": 0.09,
+          "emission": 38.16
+        },
+        {
+          "stepId": "distributor-vehicles",
+          "stepLabel": "Distributor Araclari",
+          "unit": "km",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 243,
+          "factor": 0.21,
+          "emission": 51.03
+        },
+        {
+          "stepId": "outsourced-logistics",
+          "stepLabel": "Taseron Lojistik Firmalari",
+          "unit": "sevkiyat",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 234,
+          "factor": 19,
+          "emission": 4446
+        },
+        {
+          "stepId": "storage-energy",
+          "stepLabel": "Urunun Depolarda Tutuldugu Sure Boyunca Enerji Kullanimi",
+          "unit": "kWh",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 234,
+          "factor": 0.43,
+          "emission": 100.62
+        },
+        {
+          "stepId": "returns",
+          "stepLabel": "Bozulmus veya Hatali Urunlerin Geri Donusu",
+          "unit": "kg",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 123,
+          "factor": 0.35,
+          "emission": 43.05
+        },
+        {
+          "stepId": "waste-burning",
+          "stepLabel": "Tasimadan Kaynakli Atiklarin Yakilmasi",
+          "unit": "kg",
+          "groupTitle": "Fabrikadan Musteriye",
+          "value": 342,
+          "factor": 2.9,
+          "emission": 991.8
+        }
+      ]
+    }
+  ]
+}
