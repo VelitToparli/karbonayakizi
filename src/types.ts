@@ -38,13 +38,28 @@ export type CalculationResult = {
 
 export type PeriodType = "monthly" | "yearly";
 
+export type Company = {
+  id: string;
+  name: string;
+  taxNumber: string;
+  sector: string;
+  address: string;
+  contactEmail: string;
+  contactPhone: string;
+  createdAt: string;
+};
+
 export type RecordItem = {
+  id: string;
+  companyId: string | null;
   createdAt: string;
   companyName: string;
   periodType: PeriodType;
   month: number | null;
   year: number;
   grandTotal: number;
+  groupTotals?: GroupTotal[];
+  stepDetails?: StepDetail[];
 };
 
 export type AnalyticsData = {

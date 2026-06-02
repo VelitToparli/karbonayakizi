@@ -2,16 +2,19 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useEffect, useMemo, useState } from "react";
 import * as XLSX from "xlsx";
+import { useAuth } from "./context/AuthContext";
 import { Controls } from "./components/Controls";
 import { DetailsSection } from "./components/DetailsSection";
 import { GroupList } from "./components/GroupList";
 import { RecordsSection } from "./components/RecordsSection";
 import { SummaryCards } from "./components/SummaryCards";
 import { ChartsSection } from "./components/ChartsSection";
+import { CompanyModal } from "./components/CompanyModal";
 import { defaultGroups } from "./data";
 import type {
   AnalyticsData,
   CalculationResult,
+  Company,
   GroupTemplate,
   PeriodType,
   RecordItem,
@@ -102,8 +105,9 @@ function getStepRecommendation(stepLabel: string): string {
 }
 
 export function App() {
+  const { user, logout, authFetch } = useAuth();
   const wizardStepCount = defaultGroups.length;
-  const [companyName, setCompanyName] = useState("");
+  const [showCompanyModal, setShowCompanyModal] = useState(false);
   const [periodType, setPeriodType] = useState<PeriodType>("monthly");
   const [month, setMonth] = useState(1);
   const [year, setYear] = useState(initialYear);
@@ -113,6 +117,9 @@ export function App() {
   const [factors, setFactors] = useState<Record<string, number>>({});
   const [records, setRecords] = useState<RecordItem[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsData>(emptyAnalytics);
+
+  const companyName = user?.companyName ?? "";
+  const [activeTab, setActiveTab] = useState<"calculate" | "history">("calculate");
 
   const isResultStep = currentWizardStep >= wizardStepCount;
   const activeGroup =
@@ -227,13 +234,13 @@ export function App() {
 
   const loadRecentRecords = async () => {
     try {
-      const response = await fetch("/api/records");
+      const response = await authFetch("/api/records");
       if (!response.ok) {
         throw new Error("Kayitlar getirilemedi");
       }
 
       const data = (await response.json()) as { records: RecordItem[] };
-      setRecords(data.records.slice(0, 8));
+      setRecords(data.records);
     } catch (_error) {
       setRecords([]);
     }
@@ -241,7 +248,7 @@ export function App() {
 
   const loadAnalytics = async (selectedYear: number) => {
     try {
-      const response = await fetch(`/api/analytics?year=${selectedYear}`);
+      const response = await authFetch(`/api/analytics?year=${selectedYear}`);
       if (!response.ok) {
         throw new Error("Analitik alinamadi");
       }
@@ -255,25 +262,20 @@ export function App() {
   };
 
   const saveRecord = async () => {
-    if (!companyName.trim()) {
-      setStatusMessage("Kayit icin sirket/tesis alani zorunludur.");
-      return;
-    }
-
     const payload = {
-      companyName: companyName.trim(),
       periodType,
       month: periodType === "monthly" ? month : null,
       year,
       grandTotal: result.grandTotal,
       groupTotals: result.groupTotals,
       stepDetails: result.stepDetails,
+      // companyName and companyId are derived from JWT on the server
+      companyName: companyName.trim(),
     };
 
     try {
-      const response = await fetch("/api/records", {
+      const response = await authFetch("/api/records", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -283,6 +285,7 @@ export function App() {
 
       setStatusMessage("Hesaplama backend uzerine kaydedildi.");
       await Promise.all([loadAnalytics(year), loadRecentRecords()]);
+      setActiveTab("history");
     } catch (_error) {
       setStatusMessage(
         "Kayit yapilamadi. Backend servisinin acik oldugunu kontrol edin.",
@@ -920,8 +923,21 @@ export function App() {
       <div className="bg-shape bg-shape-right" />
       <main className="container">
         <header className="hero">
-          <p className="eyebrow">Kurumsal Karbon Ayak Izi</p>
-          <h1>Detayli Hesaplama ve Raporlama</h1>
+          <div className="hero-top">
+            <div>
+              <p className="eyebrow">Kurumsal Karbon Ayak Izi</p>
+              <h1>Detayli Hesaplama ve Raporlama</h1>
+            </div>
+            <div className="hero-user">
+              <span className="hero-user-info">
+                <strong>{user?.name}</strong>
+                <span>{user?.companyName}</span>
+              </span>
+              <button type="button" className="logout-btn" onClick={logout}>
+                Cikis Yap
+              </button>
+            </div>
+          </div>
           <p className="hero-text">
             Miktar x Katsayi mantigiyla adim bazinda hesaplayin, sonuclari
             kaydedin, aylik-yillik trendleri izleyin ve raporu PDF/Excel olarak
@@ -929,142 +945,188 @@ export function App() {
           </p>
         </header>
 
-        <Controls
-          companyName={companyName}
-          periodType={periodType}
-          month={month}
-          year={year}
-          statusMessage={statusMessage}
-          onCompanyNameChange={setCompanyName}
-          onPeriodTypeChange={setPeriodType}
-          onMonthChange={setMonth}
-          onYearChange={setYear}
-        />
-
-        <section className="wizard-nav">
-          <div
-            className="wizard-steps"
-            role="list"
-            aria-label="Hesaplama adimlari"
-          >
-            {defaultGroups.map((group, index) => (
-              <span
-                key={group.id}
-                role="listitem"
-                className={`wizard-step ${index === currentWizardStep ? "active" : ""} ${
-                  index < currentWizardStep ? "done" : ""
-                }`}
-              >
-                {index + 1}. {group.title}
-              </span>
-            ))}
-            <span
-              role="listitem"
-              className={`wizard-step ${isResultStep ? "active" : ""}`}
-            >
-              4. Sonuc
-            </span>
-          </div>
-
-          {!isResultStep && (
-            <div className="wizard-actions">
-              <button
-                id="reset-btn"
-                type="button"
-                onClick={() => {
-                  setValues({});
-                  setStatusMessage("Tum miktar degerleri sifirlandi.");
-                }}
-              >
-                Degerleri Sifirla
-              </button>
-              {currentWizardStep > 0 && (
-                <button
-                  type="button"
-                  className="secondary-btn"
-                  onClick={() => setCurrentWizardStep((prev) => prev - 1)}
-                >
-                  Geri
-                </button>
-              )}
-              <button
-                type="button"
-                className="primary-btn"
-                onClick={() => {
-                  if (currentWizardStep === wizardStepCount - 1) {
-                    setCurrentWizardStep(wizardStepCount);
-                    setStatusMessage(
-                      "Tum adimlar tamamlandi. Sonuc ekranina gecildi.",
-                    );
-                    return;
-                  }
-                  setCurrentWizardStep((prev) => prev + 1);
-                }}
-              >
-                {currentWizardStep === wizardStepCount - 1
-                  ? "Sonucu Gor"
-                  : "Ileri"}
-              </button>
-            </div>
-          )}
-        </section>
-
-        <SummaryCards
-          grandTotal={result.grandTotal}
-          totalSteps={result.totalSteps}
-          activeInputs={result.activeInputs}
-        />
-
-        {!isResultStep && activeGroup && (
-          <GroupList
-            groups={[activeGroup]}
-            values={values}
-            factors={factors}
-            groupTotals={groupTotals}
-            stepResults={stepResults}
-            onValueChange={(stepId, value) => {
-              setValues((prev) => ({ ...prev, [stepId]: value }));
+        {showCompanyModal && (
+          <CompanyModal
+            company={null}
+            onSave={async (formData) => {
+              const res = await authFetch(`/api/companies/${user!.companyId}`, {
+                method: "PUT",
+                body: JSON.stringify(formData),
+              });
+              if (!res.ok) throw new Error("Kayit basarisiz");
+              setShowCompanyModal(false);
+              setStatusMessage("Firma bilgileri guncellendi.");
             }}
+            onClose={() => setShowCompanyModal(false)}
           />
         )}
 
-        {isResultStep && (
-          <>
-            <section className="result-actions">
-              <button
-                type="button"
-                className="secondary-btn"
-                onClick={() => setCurrentWizardStep(wizardStepCount - 1)}
-              >
-                Forma Geri Don
-              </button>
-              <button id="save-btn" type="button" onClick={saveRecord}>
-                Sonucu Kaydet
-              </button>
-              <button id="pdf-btn" type="button" onClick={exportToPdf}>
-                PDF Disa Aktar
-              </button>
-              <button id="excel-btn" type="button" onClick={exportToExcel}>
-                Excel Disa Aktar
-              </button>
-            </section>
+        <nav className="tab-nav" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "calculate"}
+            className={`tab-btn${activeTab === "calculate" ? " active" : ""}`}
+            onClick={() => setActiveTab("calculate")}
+          >
+            🧮 Yeni Hesaplama
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "history"}
+            className={`tab-btn${activeTab === "history" ? " active" : ""}`}
+            onClick={() => setActiveTab("history")}
+          >
+            📋 Geçmiş Kayıtlar
+            {records.length > 0 && (
+              <span className="tab-badge">{records.length}</span>
+            )}
+          </button>
+        </nav>
 
-            <DetailsSection
-              groupBreakdown={result.groupTotals.map((item) => ({
-                title: item.groupTitle,
-                total: item.total,
-              }))}
-              topSteps={topSteps}
-              generalTotal={result.grandTotal}
-              activeInputs={result.activeInputs}
-              totalSteps={result.totalSteps}
-              topThreeShare={keyInsights.topThreeShare}
-              highestSourceLabel={keyInsights.highestSourceLabel}
-              highestSourceValue={keyInsights.highestSourceValue}
-              reductionPotential={keyInsights.reductionPotential}
-              recommendations={keyInsights.recommendations}
+        {activeTab === "calculate" && (
+          <>
+            <Controls
+              periodType={periodType}
+              month={month}
+              year={year}
+              statusMessage={statusMessage}
+              onPeriodTypeChange={setPeriodType}
+              onMonthChange={setMonth}
+              onYearChange={setYear}
             />
 
+            <section className="wizard-nav">
+              <div
+                className="wizard-steps"
+                role="list"
+                aria-label="Hesaplama adimlari"
+              >
+                {defaultGroups.map((group, index) => (
+                  <span
+                    key={group.id}
+                    role="listitem"
+                    className={`wizard-step ${index === currentWizardStep ? "active" : ""} ${
+                      index < currentWizardStep ? "done" : ""
+                    }`}
+                  >
+                    {index + 1}. {group.title}
+                  </span>
+                ))}
+                <span
+                  role="listitem"
+                  className={`wizard-step ${isResultStep ? "active" : ""}`}
+                >
+                  {wizardStepCount + 1}. Sonuc
+                </span>
+              </div>
+
+              {!isResultStep && (
+                <div className="wizard-actions">
+                  <button
+                    id="reset-btn"
+                    type="button"
+                    onClick={() => {
+                      setValues({});
+                      setStatusMessage("Tum miktar degerleri sifirlandi.");
+                    }}
+                  >
+                    Degerleri Sifirla
+                  </button>
+                  {currentWizardStep > 0 && (
+                    <button
+                      type="button"
+                      className="secondary-btn"
+                      onClick={() => setCurrentWizardStep((prev) => prev - 1)}
+                    >
+                      Geri
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="primary-btn"
+                    onClick={() => {
+                      if (currentWizardStep === wizardStepCount - 1) {
+                        setCurrentWizardStep(wizardStepCount);
+                        setStatusMessage(
+                          "Tum adimlar tamamlandi. Sonuc ekranina gecildi.",
+                        );
+                        return;
+                      }
+                      setCurrentWizardStep((prev) => prev + 1);
+                    }}
+                  >
+                    {currentWizardStep === wizardStepCount - 1
+                      ? "Sonucu Gor"
+                      : "Ileri"}
+                  </button>
+                </div>
+              )}
+            </section>
+
+            <SummaryCards
+              grandTotal={result.grandTotal}
+              totalSteps={result.totalSteps}
+              activeInputs={result.activeInputs}
+            />
+
+            {!isResultStep && activeGroup && (
+              <GroupList
+                groups={[activeGroup]}
+                values={values}
+                factors={factors}
+                groupTotals={groupTotals}
+                stepResults={stepResults}
+                onValueChange={(stepId, value) => {
+                  setValues((prev) => ({ ...prev, [stepId]: value }));
+                }}
+              />
+            )}
+
+            {isResultStep && (
+              <>
+                <section className="result-actions">
+                  <button
+                    type="button"
+                    className="secondary-btn"
+                    onClick={() => setCurrentWizardStep(wizardStepCount - 1)}
+                  >
+                    Forma Geri Don
+                  </button>
+                  <button id="save-btn" type="button" onClick={saveRecord}>
+                    Sonucu Kaydet
+                  </button>
+                  <button id="pdf-btn" type="button" onClick={exportToPdf}>
+                    PDF Disa Aktar
+                  </button>
+                  <button id="excel-btn" type="button" onClick={exportToExcel}>
+                    Excel Disa Aktar
+                  </button>
+                </section>
+
+                <DetailsSection
+                  groupBreakdown={result.groupTotals.map((item) => ({
+                    title: item.groupTitle,
+                    total: item.total,
+                  }))}
+                  topSteps={topSteps}
+                  generalTotal={result.grandTotal}
+                  activeInputs={result.activeInputs}
+                  totalSteps={result.totalSteps}
+                  topThreeShare={keyInsights.topThreeShare}
+                  highestSourceLabel={keyInsights.highestSourceLabel}
+                  highestSourceValue={keyInsights.highestSourceValue}
+                  reductionPotential={keyInsights.reductionPotential}
+                  recommendations={keyInsights.recommendations}
+                />
+              </>
+            )}
+          </>
+        )}
+
+        {activeTab === "history" && (
+          <>
             <ChartsSection year={year} analytics={analytics} />
             <RecordsSection records={records} />
           </>

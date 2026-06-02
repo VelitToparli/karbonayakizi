@@ -1,12 +1,10 @@
 import type { PeriodType } from "../types";
 
 type ControlsProps = {
-  companyName: string;
   periodType: PeriodType;
   month: number;
   year: number;
   statusMessage: string;
-  onCompanyNameChange: (value: string) => void;
   onPeriodTypeChange: (value: PeriodType) => void;
   onMonthChange: (value: number) => void;
   onYearChange: (value: number) => void;
@@ -15,15 +13,6 @@ type ControlsProps = {
 export function Controls(props: ControlsProps) {
   return (
     <section className="controls">
-      <label>
-        Sirket / Tesis
-        <input
-          type="text"
-          placeholder="Ornek: Merkez Uretim Tesisi"
-          value={props.companyName}
-          onChange={(event) => props.onCompanyNameChange(event.target.value)}
-        />
-      </label>
       <label>
         Donem Tipi
         <select
@@ -36,6 +25,7 @@ export function Controls(props: ControlsProps) {
           <option value="yearly">Yillik</option>
         </select>
       </label>
+
       {props.periodType === "monthly" ? (
         <label>
           Ay
@@ -52,6 +42,7 @@ export function Controls(props: ControlsProps) {
       ) : (
         <div />
       )}
+
       <label>
         Yil
         <input
@@ -66,7 +57,9 @@ export function Controls(props: ControlsProps) {
           }
         />
       </label>
+
       <p className="status-message">{props.statusMessage}</p>
     </section>
   );
 }
+
